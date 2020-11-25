@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.spanutils.MyImageSpan;
 import com.github.spanutils.SpanBuild;
 
 public class ApiActivity extends AppCompatActivity {
@@ -63,12 +64,12 @@ public class ApiActivity extends AppCompatActivity {
                 .append("X伸缩0.5f\n").setScaleXSize(0.5f)
                 .append("serif字体").setTextFamily("serif")
                 .append("原始大小图片")
-                .appendImage(new SpanBuild.MyImageSpan(this,R.drawable.test))
+                .appendImage(new MyImageSpan(this,R.drawable.test))
                 .append("\n50px宽度的图片")
-                .appendImage(new SpanBuild.MyImageSpan(this,R.drawable.test).setWidth(50))
+                .appendImage(new MyImageSpan(this,R.drawable.test).setWidth(50))
                 .append("\n250px宽度的图片且设置成红色")
                 .setTextAlignRight()
-                .appendImage(new SpanBuild.MyImageSpan(this,R.drawable.test).setHeight(250).setColor(Color.RED))
+                .appendImage(new MyImageSpan(this,R.drawable.test).setHeight(250).setColor(Color.RED))
                 .build(tvTestSpan);//如果需要点击事件或者设置了并需要点击效果，需要在build方法传入该TextView
 
         tvTestSpan.setText(build);

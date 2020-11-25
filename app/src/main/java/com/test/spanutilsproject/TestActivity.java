@@ -7,11 +7,13 @@ import android.support.v7.widget.AppCompatSeekBar;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
 import com.github.selectcolordialog.SelectColorDialog;
 import com.github.selectcolordialog.SelectColorListener;
+import com.github.spanutils.MyBgSpan;
 import com.github.spanutils.SpanBuild;
 
 public class TestActivity extends AppCompatActivity  implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
@@ -33,13 +35,27 @@ public class TestActivity extends AppCompatActivity  implements SeekBar.OnSeekBa
     private android.support.v7.widget.AppCompatSeekBar sbBorderDashLength;
     private View bgColor;
     private View textColor;
-    private AppCompatSeekBar sbTextSize;
     private android.widget.RadioGroup rgAlign;
     private android.widget.RadioButton rbBottom;
     private android.widget.RadioButton rbTop;
     private android.widget.RadioButton rbCenter;
-    private SpanBuild.BgSpan testSpan;
+
+
+    private RadioGroup rgGradient;
+    private RadioButton rbGradientNone;
+    private RadioButton rbGradientLinear;
+    private RadioButton rbGradientSweep;
+    private RadioButton rbGradientRadial;
+    private View bgStartColor;
+    private View bgEndColor;
+
+
+
+    private MyBgSpan testSpan;
     private int testSize;
+    private AppCompatSeekBar sbGradientLinear;
+    private AppCompatSeekBar sbGradientOffset;
+    private AppCompatSeekBar sbGradientOffsetY;
 
 
     @Override
@@ -50,8 +66,9 @@ public class TestActivity extends AppCompatActivity  implements SeekBar.OnSeekBa
         initData();
     }
     public void initView() {
-        testSpan = new SpanBuild.BgSpan();
+        testSpan = new MyBgSpan();
         tvTestSpan = findViewById(R.id.tvTestSpan);
+
         sbMarginLeft = findViewById(R.id.sbMarginLeft);
         sbMarginLeft.setOnSeekBarChangeListener(this);
 
@@ -94,8 +111,6 @@ public class TestActivity extends AppCompatActivity  implements SeekBar.OnSeekBa
         sbBorderDashLength = findViewById(R.id.sbBorderDashLength);
         sbBorderDashLength.setOnSeekBarChangeListener(this);
 
-        sbTextSize = findViewById(R.id.sbTextSize);
-        sbTextSize.setOnSeekBarChangeListener(this);
 
         bgColor = findViewById(R.id.bgColor );
         bgColor.setOnClickListener(this);
@@ -124,24 +139,86 @@ public class TestActivity extends AppCompatActivity  implements SeekBar.OnSeekBa
         rbBottom = findViewById(R.id.rbBottom);
         rbTop = findViewById(R.id.rbTop);
         rbCenter = findViewById(R.id.rbCenter);
+
+
+
+
+
+
+
+        rgGradient = findViewById(R.id.rgGradient);
+        rgGradient.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rbGradientNone:
+                        testSpan.setGradientNone();
+                        reset(testSpan);
+                    break;
+                    case R.id.rbGradientLinear:
+                        testSpan.setGradientLinear();
+                        reset(testSpan);
+                    break;
+                    case R.id.rbGradientSweep:
+                        testSpan.setGradientSweep();
+                        reset(testSpan);
+                    break;
+                    case R.id.rbGradientRadial:
+                        testSpan.setGradientRadial();
+                        reset(testSpan);
+                    break;
+                }
+            }
+        });
+
+        sbGradientLinear = findViewById(R.id.sbGradientLinear);
+        sbGradientLinear.setOnSeekBarChangeListener(this);
+
+        sbGradientOffset = findViewById(R.id.sbGradientOffset);
+        sbGradientOffset.setOnSeekBarChangeListener(this);
+
+        sbGradientOffsetY = findViewById(R.id.sbGradientOffsetY);
+        sbGradientOffsetY.setOnSeekBarChangeListener(this);
+
+        rbGradientNone = findViewById(R.id.rbGradientNone);
+        rbGradientLinear = findViewById(R.id.rbGradientLinear);
+        rbGradientSweep = findViewById(R.id.rbGradientSweep);
+        rbGradientRadial = findViewById(R.id.rbGradientRadial);
+
+        bgStartColor = findViewById(R.id.bgStartColor);
+        bgStartColor.setOnClickListener(this);
+        bgStartColor.setBackgroundColor(Color.parseColor("#57b7e9"));
+
+        bgEndColor = findViewById(R.id.bgEndColor);
+        bgEndColor.setBackgroundColor(Color.parseColor("#E79742"));
+        bgEndColor.setOnClickListener(this);
+
+
+        testSpan.setGradientStartColor(Color.parseColor("#57b7e9"));
+        testSpan.setGradientEndColor(Color.parseColor("#E79742"));
     }
 
     public void initData() {
-        reset(new SpanBuild.BgSpan());
+        testSpan.setBgColor(Color.GREEN).setBorderColor(Color.BLUE).setTextColor(Color.RED);
+        borderColor.setBackgroundColor(Color.BLUE);
+        bgColor.setBackgroundColor(Color.GREEN);
+        textColor.setBackgroundColor(Color.RED);
+
+        reset(testSpan);
     }
 
-    private void reset(SpanBuild.BgSpan span) {
-        span.setTextColor(Color.GRAY);
+    private void reset(MyBgSpan span) {
+//        span.setTextColor(Color.GRAY);
         SpannableStringBuilder build1 = SpanBuild.get("测试")
 //                .setTextSize(48,false)
-                .append("换行\n")
-                .append("这王H")
-                .setTextColor(Color.RED)
+                .append("\n")
+                .append("加点距离")
+                .append("效果区域")
+//                .setTextColor(Color.RED)
                 .setTextSize(11, true)
                 .setSpan(span)
-                .setTextColor(Color.BLUE)
-                .append("H结束")
-                .append("\nH结束")
+//                .setTextColor(Color.BLUE)
+                .append("结束")
 //                .setTextSize(65,false)
                 .build();
         Log.i("=====","=====color:blue"+Color.BLUE);
@@ -171,6 +248,14 @@ public class TestActivity extends AppCompatActivity  implements SeekBar.OnSeekBa
                     case R.id.textColor:
                         textColor.setBackgroundColor(i);
                         testSpan.setTextColor(i);
+                        break;
+                    case R.id.bgStartColor:
+                        bgStartColor.setBackgroundColor(i);
+                        testSpan.setGradientStartColor(i);
+                        break;
+                    case R.id.bgEndColor:
+                        bgEndColor.setBackgroundColor(i);
+                        testSpan.setGradientEndColor(i);
                         break;
                 }
                 reset(testSpan);
@@ -234,9 +319,16 @@ public class TestActivity extends AppCompatActivity  implements SeekBar.OnSeekBa
                 testSpan.setBorderDashLength(progress);
                 reset(testSpan);
                 break;
-            case R.id.sbTextSize:
-                testSize = progress;
-//                testSpan.setTextSize(progress);
+            case R.id.sbGradientLinear:
+                testSpan.setGradientAngle(progress);
+                reset(testSpan);
+                break;
+            case R.id.sbGradientOffset:
+                testSpan.setGradientCenterX(progress-sbGradientOffset.getMax()/2);
+                reset(testSpan);
+                break;
+            case R.id.sbGradientOffsetY:
+                testSpan.setGradientCenterY(progress-sbGradientOffsetY.getMax()/2);
                 reset(testSpan);
                 break;
         }

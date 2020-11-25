@@ -10,7 +10,6 @@
         android:id="@+id/tvTestSpan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -237,23 +236,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="textSize" />
-
-        <android.support.v7.widget.AppCompatSeekBar
-            android:id="@+id/sbTextSize"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -282,29 +265,142 @@
             android:layout_height="20dp"
             android:background="@color/c_black" />
     </LinearLayout>
+    <RadioGroup
+        android:id="@+id/rgGradient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rbGradientNone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="无渐变" />
+        <RadioButton
+            android:id="@+id/rbGradientLinear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="线性渐变" />
 
+        <RadioButton
+            android:id="@+id/rbGradientSweep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫描渐变" />
+        <RadioButton
+            android:id="@+id/rbGradientRadial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="圆圈渐变" />
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="渐变startColor" />
+
+        <View
+            android:id="@+id/bgStartColor"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/c_black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="渐变endColor" />
+
+        <View
+            android:id="@+id/bgEndColor"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/c_black" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="线性渐变旋转角度"
+            />
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/sbGradientLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫描渐变和圆圈渐变X轴中心偏移量"
+            />
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/sbGradientOffset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:progress="100"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫描渐变和圆圈渐变Y轴中心偏移量"
+            />
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/sbGradientOffsetY"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:progress="100"
+            />
+    </LinearLayout>
     <RadioGroup
         android:id="@+id/rgAlign"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
         <RadioButton
             android:id="@+id/rbBottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:textSize="12sp"
             android:text="ALIGN_BOTTOM" />
 
         <RadioButton
             android:id="@+id/rbTop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             android:text="ALIGN_TOP" />
 
         <RadioButton
             android:id="@+id/rbCenter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
             android:text="ALIGN_CENTER" />
     </RadioGroup>
 </LinearLayout>

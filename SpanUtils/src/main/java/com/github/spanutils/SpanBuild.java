@@ -1,26 +1,11 @@
 package com.github.spanutils;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Parcel;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -32,14 +17,11 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.AlignmentSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.BulletSpan;
-import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.ImageSpan;
 import android.text.style.LeadingMarginSpan;
 import android.text.style.MaskFilterSpan;
 import android.text.style.QuoteSpan;
 import android.text.style.RelativeSizeSpan;
-import android.text.style.ReplacementSpan;
 import android.text.style.ScaleXSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
@@ -48,7 +30,6 @@ import android.text.style.SuperscriptSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -273,7 +254,7 @@ public class SpanBuild {
             otherLineMargin = 0;
         }
         if (isClickable) {
-            builder.setSpan(new MyClickableSpan(textColor, underLine) {
+            builder.setSpan(new MyClickSpan(textColor, underLine) {
                 @Override
                 public void onClick(@NonNull View widget) {
                     super.onClick(widget);
@@ -290,8 +271,8 @@ public class SpanBuild {
                     continue;
                 }
                 if (textColor != defaultValue) {
-                    if (obj instanceof BgSpan) {
-                        ((BgSpan) obj).setTextColor(textColor);
+                    if (obj instanceof MyBgSpan) {
+                        ((MyBgSpan) obj).setTextColor(textColor);
                     }
                 }
                 builder.setSpan(obj, start, end, flag);
@@ -365,206 +346,8 @@ public class SpanBuild {
         buildSpan();
         return builder;
     }
-
     /************************************************************************************/
-    public class MyURLSpan extends URLSpan {
-        private int color;
-        private boolean useUnderLine;
 
-        public MyURLSpan(String url, int color, boolean useUnderLine) {
-            super(url);
-            this.color = color;
-            this.useUnderLine = useUnderLine;
-        }
-
-        public MyURLSpan(@NonNull Parcel src) {
-            super(src);
-        }
-
-        @Override
-        public void onClick(View widget) {
-            super.onClick(widget);
-            if (widget instanceof TextView) {
-                ((TextView) widget).setHighlightColor(widget.getResources().getColor(android.R.color.transparent));
-            }
-        }
-
-        @Override
-        public void updateDrawState(@NonNull TextPaint ds) {
-            super.updateDrawState(ds);
-            if (color != defaultValue) {
-                ds.setColor(color);
-            }
-            ds.setUnderlineText(useUnderLine);
-        }
-    }
-
-    public class MyClickableSpan extends ClickableSpan {
-        private int color;
-        private boolean useUnderLine;
-
-        public MyClickableSpan(int color, boolean useUnderLine) {
-            this.color = color;
-            this.useUnderLine = useUnderLine;
-        }
-
-        @Override
-        public void onClick(@NonNull View widget) {
-            if (widget instanceof TextView) {
-                ((TextView) widget).setHighlightColor(widget.getResources().getColor(android.R.color.transparent));
-            }
-        }
-
-        @Override
-        public void updateDrawState(@NonNull TextPaint ds) {
-            super.updateDrawState(ds);
-            if (color != defaultValue) {
-                ds.setColor(color);
-            }
-            ds.setUnderlineText(useUnderLine);
-        }
-    }
-
-    public static class MyImageSpan extends ImageSpan {
-        private int defaultValue = -666666;
-        private Context ctx;
-        private Drawable newDrawable;
-        private int width;
-        private int height;
-        private int color = defaultValue;
-        private PorterDuff.Mode mode = PorterDuff.Mode.SRC_ATOP;
-
-        public MyImageSpan setColor(int color) {
-            this.color = color;
-            return this;
-        }
-
-        public MyImageSpan setMode(PorterDuff.Mode mode) {
-            if (mode == null) {
-                return this;
-            }
-            this.mode = mode;
-            return this;
-        }
-
-        public MyImageSpan setWidth(int width) {
-            this.width = width;
-            return this;
-        }
-
-        public MyImageSpan setHeight(int height) {
-            this.height = height;
-            return this;
-        }
-
-        public MyImageSpan(@NonNull Bitmap b) {
-            super(b);
-        }
-
-        public MyImageSpan(@NonNull Bitmap b, int verticalAlignment) {
-            super(b, verticalAlignment);
-        }
-
-        public MyImageSpan(@NonNull Context context, @NonNull Bitmap bitmap) {
-            super(context, bitmap);
-            ctx = context;
-        }
-
-        public MyImageSpan(@NonNull Context context, @NonNull Bitmap bitmap, int verticalAlignment) {
-            super(context, bitmap, verticalAlignment);
-            ctx = context;
-        }
-
-        public MyImageSpan(@NonNull Drawable drawable) {
-            super(drawable);
-        }
-
-        public MyImageSpan(@NonNull Drawable drawable, int verticalAlignment) {
-            super(drawable, verticalAlignment);
-        }
-
-        public MyImageSpan(@NonNull Drawable drawable, @NonNull String source) {
-            super(drawable, source);
-        }
-
-        public MyImageSpan(@NonNull Drawable drawable, @NonNull String source, int verticalAlignment) {
-            super(drawable, source, verticalAlignment);
-        }
-
-        public MyImageSpan(@NonNull Context context, @NonNull Uri uri) {
-            super(context, uri);
-            ctx = context;
-        }
-
-        public MyImageSpan(@NonNull Context context, @NonNull Uri uri, int verticalAlignment) {
-            super(context, uri, verticalAlignment);
-            ctx = context;
-        }
-
-        public MyImageSpan(@NonNull Context context, int resourceId) {
-            super(context, resourceId);
-            ctx = context;
-        }
-
-        public MyImageSpan(@NonNull Context context, int resourceId, int verticalAlignment) {
-            super(context, resourceId, verticalAlignment);
-            ctx = context;
-        }
-
-        public Drawable getDrawable() {
-            if (newDrawable != null) {
-                return newDrawable;
-            }
-            Drawable drawable = super.getDrawable();
-            if (color != defaultValue) {
-                drawable.mutate().setColorFilter(color, mode);
-            }
-            if (width <= 0 && height <= 0) {
-                return drawable;
-            }
-            try {
-                int rectW = drawable.getBounds().width();
-                int rectH = drawable.getBounds().height();
-                Bitmap bitmap = null;
-                if (width > 0) {
-                    int newHeight = width * rectH / rectW;
-                    bitmap = Bitmap.createBitmap(width, newHeight, Bitmap.Config.ARGB_8888);
-                    Canvas canvas = new Canvas(bitmap);
-                    float scale = width * 1f / rectW;
-                    canvas.scale(scale, scale);
-                    drawable.draw(canvas);
-                } else if (height > 0) {
-                    int newWidth = height * rectW / rectH;
-                    bitmap = Bitmap.createBitmap(newWidth, height, Bitmap.Config.ARGB_8888);
-                    Canvas canvas = new Canvas(bitmap);
-                    float scale = height * 1f / rectH;
-                    canvas.scale(scale, scale);
-                    drawable.draw(canvas);
-                }
-                if (bitmap != null) {
-                    newDrawable = ctx != null
-                            ? new BitmapDrawable(ctx.getResources(), bitmap)
-                            : new BitmapDrawable(bitmap);
-
-                    newDrawable.setBounds(0, 0, newDrawable.getIntrinsicWidth(), newDrawable.getIntrinsicHeight());
-                    if (color != defaultValue) {
-                        newDrawable.mutate().setColorFilter(color, mode);
-                    }
-                    return newDrawable;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return drawable;
-        }
-    }
-
-    /************************************************************************************/
-/*
-    public SpanBuild setText(CharSequence text) {
-        this.text = text;
-        return this;
-    }*/
     public SpanBuild setTextSize(int textSize) {
         return setTextSize(textSize, false);
     }
@@ -788,293 +571,5 @@ public class SpanBuild {
         return this;
     }
 
-    /**/
 
-    public static class BgSpan extends ReplacementSpan implements Cloneable {
-        @Override
-        public BgSpan clone() {
-            try {
-                return (BgSpan) super.clone();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-            return this;
-        }
-
-        public static final int ALIGN_BOTTOM = 0;
-        public static final int ALIGN_TOP = 1;
-        public static final int ALIGN_CENTER = 2;
-
-        private float marginLeft;
-        private float marginTop;
-        private float marginRight;
-        private float marginBottom;
-
-        private float paddingLeft;
-        private float paddingRight;
-
-        private float radiusLeftTop;
-        private float radiusLeftBottom;
-        private float radiusRightTop;
-        private float radiusRightBottom;
-        private int borderColor;
-        private float borderWidth;
-        private float borderDashGap;
-        private float borderDashLength;
-        private int bgColor;
-        private int showAlign;
-        private int tempTextColor;
-        private int textColor;
-
-        private int itemWidth;
-        private Rect textRect = new Rect();
-        private Path path = new Path();
-        private Path clipPath = new Path();
-        private RectF pathRect;
-        private Paint.FontMetrics fontMetrics;
-
-        public BgSpan() {
-            marginLeft = 0;
-            marginTop = 0;
-            marginRight = 0;
-            marginBottom = 0;
-            paddingLeft = 0;
-            paddingRight = 0;
-            radiusLeftTop = 0;
-            radiusLeftBottom = 0;
-            radiusRightTop = 0;
-            radiusRightBottom = 0;
-            borderColor = 0;
-            borderWidth = 0;
-            borderDashGap = 0;
-            borderDashLength = 0;
-            bgColor = 0;
-            showAlign = ALIGN_BOTTOM;
-            tempTextColor = 0;
-            textColor = 0;
-
-        }
-
-        @Override
-        public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, @Nullable Paint.FontMetricsInt fm) {
-            float v = paint.measureText(text, start, end);
-            itemWidth = (int) (v + marginLeft + marginRight + paddingLeft + paddingRight);
-            return itemWidth;
-        }
-
-        @Override
-        public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, @NonNull Paint paint) {
-            if (pathRect == null) {
-                pathRect = new RectF();
-            }
-            tempTextColor = paint.getColor();
-            pathRect.left = x + marginLeft;
-            pathRect.top = (top + marginTop);
-            pathRect.right = x + itemWidth - marginRight;
-            pathRect.bottom = bottom - marginBottom;
-
-            int count = -1;
-            if (borderWidth > 0) {
-                count = canvas.saveLayer(null, null, Canvas.ALL_SAVE_FLAG);
-            }
-            /*计算背景范围*/
-            if (!path.isEmpty()) {
-                path.reset();
-            }
-            path.addRoundRect(pathRect, new float[]{radiusLeftTop, radiusLeftTop, radiusLeftBottom, radiusLeftBottom, radiusRightTop, radiusRightTop, radiusRightBottom, radiusRightBottom,}, Path.Direction.CW);
-            /*绘制背景*/
-            if (bgColor != Color.TRANSPARENT) {
-                paint.setColor(bgColor);
-                canvas.drawPath(path, paint);
-            }
-            if (borderWidth > 0) {
-                paint.setStyle(Paint.Style.STROKE);
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    paint.setStrokeWidth(borderWidth * 2);
-                } else {
-                    paint.setStrokeWidth(borderWidth);
-                }
-                paint.setColor(borderColor);
-
-                if (bgColor != Color.TRANSPARENT) {
-                    /*清除边框下的背景*/
-                    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-                    canvas.drawPath(path, paint);
-                }
-                /*绘制边框*/
-                paint.setXfermode(null);
-                if (borderDashGap > 0 && borderDashLength > 0) {
-                    paint.setPathEffect(new DashPathEffect(new float[]{borderDashLength, borderDashGap}, 0));
-                }
-                canvas.drawPath(path, paint);
-                paint.setPathEffect(null);
-
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    /*去掉内容显示区域外部边框*/
-                    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
-                    if (!clipPath.isEmpty()) {
-                        clipPath.reset();
-                    }
-                    clipPath.addRect(new RectF(x - borderWidth - 1, top - borderWidth - 1, x + itemWidth + borderWidth + 1, bottom + borderWidth + 1), Path.Direction.CW);
-                    clipPath.op(clipPath, path, Path.Op.DIFFERENCE);
-
-                    paint.setColor(Color.WHITE);
-                    paint.setStyle(Paint.Style.FILL);
-                    canvas.drawPath(clipPath, paint);
-                    paint.setXfermode(null);
-                }
-
-
-            }
-            if (count != -1) {
-                canvas.restoreToCount(count);
-            }
-
-            paint.setStrokeWidth(0);
-
-            /*绘制文字*/
-            if (textColor == Color.TRANSPARENT) {
-                textColor = tempTextColor;
-            }
-            paint.setColor(textColor);
-            if (showAlign == ALIGN_BOTTOM) {
-                canvas.drawText(text, start, end, x + paddingLeft + marginLeft, y, paint);
-            } else if (showAlign == ALIGN_CENTER) {
-                fontMetrics = paint.getFontMetrics();
-                float ascent = fontMetrics.ascent;
-                float descent = fontMetrics.descent;
-                canvas.drawText(text, start, end, x + paddingLeft + marginLeft, pathRect.centerY() - (descent + ascent) * 1f / 2 + 1.5f, paint);
-            } else {
-                paint.getTextBounds(text.toString(), start, end, textRect);
-                int offset = bottom - top - textRect.height();
-                canvas.drawText(text, start, end, x + paddingLeft + marginLeft, y - offset / 2, paint);
-            }
-        }
-
-        /************************************************************************************************************/
-        public BgSpan setMargin(float left, float top, float right, float bottom) {
-            setMarginLeft(left);
-            setMarginTop(top);
-            setMarginRight(right);
-            setMarginBottom(bottom);
-            return this;
-        }
-
-        public BgSpan setMarginLeft(float marginLeft) {
-            this.marginLeft = marginLeft;
-            return this;
-        }
-
-        public BgSpan setMarginTop(float marginTop) {
-            this.marginTop = marginTop;
-            return this;
-        }
-
-        public BgSpan setMarginRight(float marginRight) {
-            this.marginRight = marginRight;
-            return this;
-        }
-
-        public BgSpan setMarginBottom(float marginBottom) {
-            this.marginBottom = marginBottom;
-            return this;
-        }
-
-        public BgSpan setPadding(float padding) {
-            setPadding(padding, padding);
-            return this;
-        }
-
-        public BgSpan setPadding(float left, float right) {
-            setPaddingLeft(left);
-            setPaddingRight(right);
-            return this;
-        }
-
-        public BgSpan setPaddingLeft(float paddingLeft) {
-            this.paddingLeft = paddingLeft;
-            return this;
-        }
-
-        public BgSpan setPaddingRight(float paddingRight) {
-            this.paddingRight = paddingRight;
-            return this;
-        }
-
-        public BgSpan setRadius(float radius) {
-            setRadiusLeftTop(radius);
-            setRadiusRightTop(radius);
-            setRadiusLeftBottom(radius);
-            setRadiusRightBottom(radius);
-            return this;
-        }
-
-        public BgSpan setRadiusLeftTop(float radiusLeftTop) {
-            this.radiusLeftTop = radiusLeftTop;
-            return this;
-        }
-
-        public BgSpan setRadiusLeftBottom(float radiusLeftBottom) {
-            this.radiusLeftBottom = radiusLeftBottom;
-            return this;
-        }
-
-        public BgSpan setRadiusRightTop(float radiusRightTop) {
-            this.radiusRightTop = radiusRightTop;
-            return this;
-        }
-
-        public BgSpan setRadiusRightBottom(float radiusRightBottom) {
-            this.radiusRightBottom = radiusRightBottom;
-            return this;
-        }
-
-        public BgSpan setBorderColor(@ColorInt int borderColor) {
-            this.borderColor = borderColor;
-            return this;
-        }
-
-        public BgSpan setBorderWidth(float borderWidth) {
-            this.borderWidth = borderWidth;
-            return this;
-        }
-
-        public BgSpan setBorderDashGap(float borderDashGap) {
-            this.borderDashGap = borderDashGap;
-            return this;
-        }
-
-        public BgSpan setBorderDashLength(float borderDashLength) {
-            this.borderDashLength = borderDashLength;
-            return this;
-        }
-
-        public BgSpan setBgColor(@ColorInt int bgColor) {
-            this.bgColor = bgColor;
-            return this;
-        }
-
-        public BgSpan setShowAlignBottom() {
-            this.showAlign = ALIGN_BOTTOM;
-            return this;
-        }
-
-        public BgSpan setShowAlignTop() {
-            this.showAlign = ALIGN_TOP;
-            return this;
-        }
-
-        public BgSpan setShowAlignCenter() {
-            this.showAlign = ALIGN_CENTER;
-            return this;
-        }
-
-        public BgSpan setTextColor(@ColorInt int textColor) {
-            this.textColor = textColor;
-            return this;
-        }
-
-    }
 }
