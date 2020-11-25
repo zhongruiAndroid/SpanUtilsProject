@@ -3,6 +3,9 @@
 [//]: >![github](https://github.com/zhongruiAndroid/MyFastshape/blob/master/app/src/main/res/drawable/demo.png=320x640)  
 <img src="https://github.com/zhongruiAndroid/SpanUtilsProject/blob/master/shots/test_a.png" alt="image"  width="auto" height="640">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/zhongruiAndroid/SpanUtilsProject/blob/master/shots/test_b.png" alt="image"  width="auto" height="640">  
   
+  
+
+## [Demo.apk下载](https://raw.githubusercontent.com/zhongruiAndroid/SpanUtilsProject/master/apk/demo.apk "apk文件")
     
 
 ```java
