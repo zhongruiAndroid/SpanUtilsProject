@@ -324,11 +324,11 @@ public class TestActivity extends AppCompatActivity  implements SeekBar.OnSeekBa
                 reset(testSpan);
                 break;
             case R.id.sbGradientOffset:
-                testSpan.setGradientCenterX(progress-sbGradientOffset.getMax()/2);
+                testSpan.setGradientCenterXOffset(progress-sbGradientOffset.getMax()/2);
                 reset(testSpan);
                 break;
             case R.id.sbGradientOffsetY:
-                testSpan.setGradientCenterY(progress-sbGradientOffsetY.getMax()/2);
+                testSpan.setGradientCenterYOffset(progress-sbGradientOffsetY.getMax()/2);
                 reset(testSpan);
                 break;
         }

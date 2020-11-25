@@ -163,15 +163,15 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
                         gradientRadius=itemWidth/2;
                     }
                     if(gradientColors!=null&&gradientColorPositions!=null&&gradientColors.length>0&&gradientColors.length==gradientColorPositions.length){
-                        shader=new RadialGradient(getGradientCenterX(x),getGradientCenterY(top,bottom),gradientRadius,gradientColors,gradientColorPositions, Shader.TileMode.CLAMP);
+                        shader=new RadialGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top,bottom),gradientRadius,gradientColors,gradientColorPositions, Shader.TileMode.CLAMP);
                     }else{
-                        shader=new RadialGradient(getGradientCenterX(x),getGradientCenterY(top,bottom),gradientRadius,gradientStartColor,gradientEndColor, Shader.TileMode.CLAMP);
+                        shader=new RadialGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top,bottom),gradientRadius,gradientStartColor,gradientEndColor, Shader.TileMode.CLAMP);
                     }
                 }else if(gradientType==GRADIENT_TYPE_SWEEP){
                     if(gradientColors!=null&&gradientColorPositions!=null&&gradientColors.length>0&&gradientColors.length==gradientColorPositions.length){
-                        shader=new SweepGradient(getGradientCenterX(x),getGradientCenterY(top,bottom),gradientColors,gradientColorPositions);
+                        shader=new SweepGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top,bottom),gradientColors,gradientColorPositions);
                     }else{
-                        shader=new SweepGradient(getGradientCenterX(x),getGradientCenterY(top,bottom),gradientStartColor,gradientEndColor);
+                        shader=new SweepGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top,bottom),gradientStartColor,gradientEndColor);
                     }
                 }
             }else{
@@ -403,20 +403,20 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
         return this;
     }
 
-    public float getGradientCenterX(float startX) {
+    private float getGradientCenterXOffset(float startX) {
         return startX+itemWidth/2+gradientCenterX;
     }
 
-    public float getGradientCenterY(int top,int bottom) {
+    private float getGradientCenterYOffset(int top, int bottom) {
         return (bottom-top)/2+top+gradientCenterY;
     }
 
-    public MyBgSpan setGradientCenterX(float gradientCenterX) {
+    public MyBgSpan setGradientCenterXOffset(float gradientCenterX) {
         this.gradientCenterX = gradientCenterX;
         return this;
     }
 
-    public MyBgSpan setGradientCenterY( float gradientCenterY) {
+    public MyBgSpan setGradientCenterYOffset(float gradientCenterY) {
         this.gradientCenterY = gradientCenterY;
         return this;
     }
