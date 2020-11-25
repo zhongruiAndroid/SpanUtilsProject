@@ -4,8 +4,8 @@
 <img src="https://github.com/zhongruiAndroid/SpanUtilsProject/blob/master/shots/test_a.png" alt="image"  width="auto" height="640">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/zhongruiAndroid/SpanUtilsProject/blob/master/shots/test_b.png" alt="image"  width="auto" height="640">  
   
   
-
 ## [Demo.apk下载](https://raw.githubusercontent.com/zhongruiAndroid/SpanUtilsProject/master/apk/demo.apk "apk文件")
+无法下载Demo.apk时,可以去apk目录手动下载
     
 
 ```java
