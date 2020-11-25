@@ -5,7 +5,7 @@ android {
     buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.test.spanutilsproject"
-        minSdkVersion 19
+        minSdkVersion 15
         targetSdkVersion 28
         versionCode 3
         versionName "1.2"
@@ -22,13 +22,13 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
         }
         release {
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -43,6 +43,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    repositories{
+        flatDir{
+            dirs"libs"
+        }
+    }
 }
 
 dependencies {
@@ -55,4 +60,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     implementation project(":SpanUtils")
+
+
+    api(name: 'SelectColorDialog', ext: 'aar')
+    api "com.github.skydoves:colorpickerview:2.0.2"
 }

@@ -16,6 +16,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Parcel;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -288,8 +289,8 @@ public class SpanBuild {
                 if (obj == null) {
                     continue;
                 }
-                if(textColor!=defaultValue){
-                    if(obj instanceof BgSpan){
+                if (textColor != defaultValue) {
+                    if (obj instanceof BgSpan) {
                         ((BgSpan) obj).setTextColor(textColor);
                     }
                 }
@@ -564,7 +565,6 @@ public class SpanBuild {
         this.text = text;
         return this;
     }*/
-
     public SpanBuild setTextSize(int textSize) {
         return setTextSize(textSize, false);
     }
@@ -859,8 +859,6 @@ public class SpanBuild {
         public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, @Nullable Paint.FontMetricsInt fm) {
             float v = paint.measureText(text, start, end);
             itemWidth = (int) (v + marginLeft + marginRight + paddingLeft + paddingRight);
-
-            Log.i("=====","=====color:paint"+paint.getColor());
             return itemWidth;
         }
 
@@ -891,7 +889,12 @@ public class SpanBuild {
             }
             if (borderWidth > 0) {
                 paint.setStyle(Paint.Style.STROKE);
-                paint.setStrokeWidth(borderWidth * 2);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    paint.setStrokeWidth(borderWidth * 2);
+                } else {
+                    paint.setStrokeWidth(borderWidth);
+                }
                 paint.setColor(borderColor);
 
                 if (bgColor != Color.TRANSPARENT) {
@@ -907,17 +910,23 @@ public class SpanBuild {
                 canvas.drawPath(path, paint);
                 paint.setPathEffect(null);
 
-                /*去掉内容显示区域外部边框*/
-                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
-                if (!clipPath.isEmpty()) {
-                    clipPath.reset();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    /*去掉内容显示区域外部边框*/
+                    paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+                    if (!clipPath.isEmpty()) {
+                        clipPath.reset();
+                    }
+                    clipPath.addRect(new RectF(x - borderWidth - 1, top - borderWidth - 1, x + itemWidth + borderWidth + 1, bottom + borderWidth + 1), Path.Direction.CW);
+                    clipPath.op(clipPath, path, Path.Op.DIFFERENCE);
+
+                    paint.setColor(Color.WHITE);
+                    paint.setStyle(Paint.Style.FILL);
+                    canvas.drawPath(clipPath, paint);
+                    paint.setXfermode(null);
                 }
-                clipPath.addRect(new RectF(x - borderWidth - 1, top - borderWidth - 1, x + itemWidth + borderWidth + 1, bottom + borderWidth + 1), Path.Direction.CW);
-                clipPath.op(clipPath, path, Path.Op.DIFFERENCE);
-                paint.setColor(Color.WHITE);
-                paint.setStyle(Paint.Style.FILL);
-                canvas.drawPath(clipPath, paint);
-                paint.setXfermode(null);
+
+
             }
             if (count != -1) {
                 canvas.restoreToCount(count);
