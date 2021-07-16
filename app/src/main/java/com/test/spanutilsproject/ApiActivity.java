@@ -1,10 +1,9 @@
 package com.test.spanutilsproject;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
-import android.text.style.BulletSpan;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;

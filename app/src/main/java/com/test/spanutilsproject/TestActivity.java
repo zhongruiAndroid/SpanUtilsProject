@@ -1,9 +1,9 @@
 package com.test.spanutilsproject;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatSeekBar;
+import androidx.appcompat.widget.AppCompatSeekBar;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
 import android.view.View;
@@ -19,20 +19,20 @@ import com.github.spanutils.SpanBuild;
 public class TestActivity extends AppCompatActivity  implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
     private android.widget.TextView tvTestSpan;
-    private android.support.v7.widget.AppCompatSeekBar sbMarginLeft;
-    private android.support.v7.widget.AppCompatSeekBar sbMarginTop;
-    private android.support.v7.widget.AppCompatSeekBar sbMarginRight;
-    private android.support.v7.widget.AppCompatSeekBar sbMarginBottom;
-    private android.support.v7.widget.AppCompatSeekBar sbPaddingLeft;
-    private android.support.v7.widget.AppCompatSeekBar sbPaddingRight;
-    private android.support.v7.widget.AppCompatSeekBar sbRadiusLeftTop;
-    private android.support.v7.widget.AppCompatSeekBar sbRadiusLeftBottom;
-    private android.support.v7.widget.AppCompatSeekBar sbRadiusRightTop;
-    private android.support.v7.widget.AppCompatSeekBar sbRadiusRightBottom;
+    private androidx.appcompat.widget.AppCompatSeekBar sbMarginLeft;
+    private androidx.appcompat.widget.AppCompatSeekBar sbMarginTop;
+    private androidx.appcompat.widget.AppCompatSeekBar sbMarginRight;
+    private androidx.appcompat.widget.AppCompatSeekBar sbMarginBottom;
+    private androidx.appcompat.widget.AppCompatSeekBar sbPaddingLeft;
+    private androidx.appcompat.widget.AppCompatSeekBar sbPaddingRight;
+    private androidx.appcompat.widget.AppCompatSeekBar sbRadiusLeftTop;
+    private androidx.appcompat.widget.AppCompatSeekBar sbRadiusLeftBottom;
+    private androidx.appcompat.widget.AppCompatSeekBar sbRadiusRightTop;
+    private androidx.appcompat.widget.AppCompatSeekBar sbRadiusRightBottom;
     private View borderColor;
-    private android.support.v7.widget.AppCompatSeekBar sbBorderWidth;
-    private android.support.v7.widget.AppCompatSeekBar sbBorderDashGap;
-    private android.support.v7.widget.AppCompatSeekBar sbBorderDashLength;
+    private androidx.appcompat.widget.AppCompatSeekBar sbBorderWidth;
+    private androidx.appcompat.widget.AppCompatSeekBar sbBorderDashGap;
+    private androidx.appcompat.widget.AppCompatSeekBar sbBorderDashLength;
     private View bgColor;
     private View textColor;
     private android.widget.RadioGroup rgAlign;
