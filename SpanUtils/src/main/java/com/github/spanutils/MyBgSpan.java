@@ -14,10 +14,8 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.style.ReplacementSpan;
+
 
 public class MyBgSpan extends ReplacementSpan implements Cloneable {
     @Override
@@ -83,7 +81,7 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
     private int gradientEndColor;
     /*渐变半径,gradientType="radial"适用,默认40*/
     private float gradientRadius;
-    private @ColorInt int gradientColors[];
+    private int gradientColors[];
     private float gradientColorPositions[];
     /**********************************************************/
 
@@ -117,14 +115,14 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
     }
 
     @Override
-    public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, @Nullable Paint.FontMetricsInt fm) {
+    public int getSize(Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
         float v = paint.measureText(text, start, end);
         itemWidth = (int) (v + marginLeft + marginRight + paddingLeft + paddingRight);
         return itemWidth;
     }
 
     @Override
-    public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, @NonNull Paint paint) {
+    public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) {
         if (pathRect == null) {
             pathRect = new RectF();
         }
@@ -145,39 +143,39 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
         path.addRoundRect(pathRect, new float[]{radiusLeftTop, radiusLeftTop, radiusLeftBottom, radiusLeftBottom, radiusRightTop, radiusRightTop, radiusRightBottom, radiusRightBottom,}, Path.Direction.CW);
         /*绘制背景*/
         if (bgColor != Color.TRANSPARENT) {
-            if(gradientType>0){
-                if(gradientType==GRADIENT_TYPE_LINEAR){
-                    float startX=(x+itemWidth/2)*1f*(float)Math.cos(Math.toRadians(gradientAngle));
-                    float starY=(top+bottom)/2-(x+itemWidth/2)*1f*(float)Math.sin(Math.toRadians(gradientAngle));
-                    float endX=(x+itemWidth)*1f*(float)Math.cos(Math.toRadians(gradientAngle));
-                    float endY=(top+bottom)/2+(x+itemWidth)*1f*(float)Math.sin(Math.toRadians(gradientAngle));
-                    if(gradientColors!=null&&gradientColorPositions!=null&&gradientColors.length>0&&gradientColors.length==gradientColorPositions.length){
-                        shader=new LinearGradient(startX,starY,endX,endY,gradientColors,gradientColorPositions, Shader.TileMode.CLAMP);
-                    }else if(gradientCenterColor==Color.TRANSPARENT){
-                        shader=new LinearGradient(startX,starY,endX,endY,new int[]{gradientStartColor,gradientEndColor},new float[]{0,1}, Shader.TileMode.CLAMP);
-                    }else{
-                        shader=new LinearGradient(startX,starY,endX,endY,new int[]{gradientStartColor,gradientCenterColor,gradientEndColor},new float[]{0,0.5f,1}, Shader.TileMode.CLAMP);
+            if (gradientType > 0) {
+                if (gradientType == GRADIENT_TYPE_LINEAR) {
+                    float startX = (x + itemWidth / 2) * 1f * (float) Math.cos(Math.toRadians(gradientAngle));
+                    float starY = (top + bottom) / 2 - (x + itemWidth / 2) * 1f * (float) Math.sin(Math.toRadians(gradientAngle));
+                    float endX = (x + itemWidth) * 1f * (float) Math.cos(Math.toRadians(gradientAngle));
+                    float endY = (top + bottom) / 2 + (x + itemWidth) * 1f * (float) Math.sin(Math.toRadians(gradientAngle));
+                    if (gradientColors != null && gradientColorPositions != null && gradientColors.length > 0 && gradientColors.length == gradientColorPositions.length) {
+                        shader = new LinearGradient(startX, starY, endX, endY, gradientColors, gradientColorPositions, Shader.TileMode.CLAMP);
+                    } else if (gradientCenterColor == Color.TRANSPARENT) {
+                        shader = new LinearGradient(startX, starY, endX, endY, new int[]{gradientStartColor, gradientEndColor}, new float[]{0, 1}, Shader.TileMode.CLAMP);
+                    } else {
+                        shader = new LinearGradient(startX, starY, endX, endY, new int[]{gradientStartColor, gradientCenterColor, gradientEndColor}, new float[]{0, 0.5f, 1}, Shader.TileMode.CLAMP);
                     }
-                }else if(gradientType==GRADIENT_TYPE_RADIAL){
-                    if(gradientRadius<=0){
-                        gradientRadius=itemWidth/2;
+                } else if (gradientType == GRADIENT_TYPE_RADIAL) {
+                    if (gradientRadius <= 0) {
+                        gradientRadius = itemWidth / 2;
                     }
-                    if(gradientColors!=null&&gradientColorPositions!=null&&gradientColors.length>0&&gradientColors.length==gradientColorPositions.length){
-                        shader=new RadialGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top,bottom),gradientRadius,gradientColors,gradientColorPositions, Shader.TileMode.CLAMP);
-                    }else{
-                        shader=new RadialGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top,bottom),gradientRadius,gradientStartColor,gradientEndColor, Shader.TileMode.CLAMP);
+                    if (gradientColors != null && gradientColorPositions != null && gradientColors.length > 0 && gradientColors.length == gradientColorPositions.length) {
+                        shader = new RadialGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top, bottom), gradientRadius, gradientColors, gradientColorPositions, Shader.TileMode.CLAMP);
+                    } else {
+                        shader = new RadialGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top, bottom), gradientRadius, gradientStartColor, gradientEndColor, Shader.TileMode.CLAMP);
                     }
-                }else if(gradientType==GRADIENT_TYPE_SWEEP){
-                    if(gradientColors!=null&&gradientColorPositions!=null&&gradientColors.length>0&&gradientColors.length==gradientColorPositions.length){
-                        shader=new SweepGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top,bottom),gradientColors,gradientColorPositions);
-                    }else{
-                        shader=new SweepGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top,bottom),gradientStartColor,gradientEndColor);
+                } else if (gradientType == GRADIENT_TYPE_SWEEP) {
+                    if (gradientColors != null && gradientColorPositions != null && gradientColors.length > 0 && gradientColors.length == gradientColorPositions.length) {
+                        shader = new SweepGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top, bottom), gradientColors, gradientColorPositions);
+                    } else {
+                        shader = new SweepGradient(getGradientCenterXOffset(x), getGradientCenterYOffset(top, bottom), gradientStartColor, gradientEndColor);
                     }
                 }
-            }else{
-                this.shader=null;
+            } else {
+                this.shader = null;
             }
-            if(shader!=null){
+            if (shader != null) {
                 paint.setShader(shader);
             }
             paint.setColor(bgColor);
@@ -195,7 +193,7 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
             paint.setStrokeWidth(borderWidth * 2);
             paint.setColor(borderColor);
 
-            if (bgColor != Color.TRANSPARENT||gradientType>0) {
+            if (bgColor != Color.TRANSPARENT || gradientType > 0) {
                 /*清除边框下的背景*/
                 paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
                 canvas.drawPath(path, paint);
@@ -328,7 +326,7 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
         return this;
     }
 
-    public MyBgSpan setBorderColor(@ColorInt int borderColor) {
+    public MyBgSpan setBorderColor(int borderColor) {
         this.borderColor = borderColor;
         return this;
     }
@@ -348,7 +346,7 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
         return this;
     }
 
-    public MyBgSpan setBgColor(@ColorInt int bgColor) {
+    public MyBgSpan setBgColor(int bgColor) {
         this.bgColor = bgColor;
         return this;
     }
@@ -368,7 +366,7 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
         return this;
     }
 
-    public MyBgSpan setTextColor(@ColorInt int textColor) {
+    public MyBgSpan setTextColor(int textColor) {
         this.textColor = textColor;
         return this;
     }
@@ -404,11 +402,11 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
     }
 
     private float getGradientCenterXOffset(float startX) {
-        return startX+itemWidth/2+gradientCenterX;
+        return startX + itemWidth / 2 + gradientCenterX;
     }
 
     private float getGradientCenterYOffset(int top, int bottom) {
-        return (bottom-top)/2+top+gradientCenterY;
+        return (bottom - top) / 2 + top + gradientCenterY;
     }
 
     public MyBgSpan setGradientCenterXOffset(float gradientCenterX) {
@@ -421,17 +419,17 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
         return this;
     }
 
-    public MyBgSpan setGradientStartColor(@ColorInt int gradientStartColor) {
+    public MyBgSpan setGradientStartColor(int gradientStartColor) {
         this.gradientStartColor = gradientStartColor;
         return this;
     }
 
-    public MyBgSpan setGradientCenterColor(@ColorInt int gradientCenterColor) {
+    public MyBgSpan setGradientCenterColor(int gradientCenterColor) {
         this.gradientCenterColor = gradientCenterColor;
         return this;
     }
 
-    public MyBgSpan setGradientEndColor(@ColorInt int gradientEndColor) {
+    public MyBgSpan setGradientEndColor(int gradientEndColor) {
         this.gradientEndColor = gradientEndColor;
         return this;
     }
@@ -447,6 +445,7 @@ public class MyBgSpan extends ReplacementSpan implements Cloneable {
     public void setGradientColors(int[] gradientColors) {
         this.gradientColors = gradientColors;
     }
+
     public void setGradientColorPositions(float[] gradientColorPositions) {
         this.gradientColorPositions = gradientColorPositions;
     }

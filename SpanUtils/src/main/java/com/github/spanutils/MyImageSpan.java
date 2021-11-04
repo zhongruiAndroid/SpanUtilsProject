@@ -48,56 +48,56 @@ public   class MyImageSpan extends ImageSpan {
             return this;
         }
 
-        public MyImageSpan(@NonNull Bitmap b) {
+        public MyImageSpan( Bitmap b) {
             super(b);
         }
 
-        public MyImageSpan(@NonNull Bitmap b, int verticalAlignment) {
+        public MyImageSpan( Bitmap b, int verticalAlignment) {
             super(b, verticalAlignment);
         }
 
-        public MyImageSpan(@NonNull Context context, @NonNull Bitmap bitmap) {
+        public MyImageSpan( Context context,  Bitmap bitmap) {
             super(context, bitmap);
             ctx = context;
         }
 
-        public MyImageSpan(@NonNull Context context, @NonNull Bitmap bitmap, int verticalAlignment) {
+        public MyImageSpan( Context context,  Bitmap bitmap, int verticalAlignment) {
             super(context, bitmap, verticalAlignment);
             ctx = context;
         }
 
-        public MyImageSpan(@NonNull Drawable drawable) {
+        public MyImageSpan( Drawable drawable) {
             super(drawable);
         }
 
-        public MyImageSpan(@NonNull Drawable drawable, int verticalAlignment) {
+        public MyImageSpan( Drawable drawable, int verticalAlignment) {
             super(drawable, verticalAlignment);
         }
 
-        public MyImageSpan(@NonNull Drawable drawable, @NonNull String source) {
+        public MyImageSpan( Drawable drawable,  String source) {
             super(drawable, source);
         }
 
-        public MyImageSpan(@NonNull Drawable drawable, @NonNull String source, int verticalAlignment) {
+        public MyImageSpan( Drawable drawable,  String source, int verticalAlignment) {
             super(drawable, source, verticalAlignment);
         }
 
-        public MyImageSpan(@NonNull Context context, @NonNull Uri uri) {
+        public MyImageSpan( Context context,  Uri uri) {
             super(context, uri);
             ctx = context;
         }
 
-        public MyImageSpan(@NonNull Context context, @NonNull Uri uri, int verticalAlignment) {
+        public MyImageSpan( Context context,  Uri uri, int verticalAlignment) {
             super(context, uri, verticalAlignment);
             ctx = context;
         }
 
-        public MyImageSpan(@NonNull Context context, int resourceId) {
+        public MyImageSpan( Context context, int resourceId) {
             super(context, resourceId);
             ctx = context;
         }
 
-        public MyImageSpan(@NonNull Context context, int resourceId, int verticalAlignment) {
+        public MyImageSpan( Context context, int resourceId, int verticalAlignment) {
             super(context, resourceId, verticalAlignment);
             ctx = context;
         }

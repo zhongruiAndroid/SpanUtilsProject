@@ -1,6 +1,5 @@
 package com.github.spanutils;
 
-import android.support.annotation.NonNull;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
@@ -17,14 +16,14 @@ public class MyClickSpan extends ClickableSpan {
     }
 
     @Override
-    public void onClick(@NonNull View widget) {
+    public void onClick(View widget) {
         if (widget instanceof TextView) {
             ((TextView) widget).setHighlightColor(widget.getResources().getColor(android.R.color.transparent));
         }
     }
 
     @Override
-    public void updateDrawState(@NonNull TextPaint ds) {
+    public void updateDrawState(TextPaint ds) {
         super.updateDrawState(ds);
         if (color != defaultValue) {
             ds.setColor(color);

@@ -1,7 +1,6 @@
 package com.github.spanutils;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
 import android.text.TextPaint;
 import android.text.style.URLSpan;
 import android.view.View;
@@ -18,7 +17,7 @@ public class MyURLSpan extends URLSpan {
         this.useUnderLine = useUnderLine;
     }
 
-    public MyURLSpan(@NonNull Parcel src) {
+    public MyURLSpan(Parcel src) {
         super(src);
     }
 
@@ -31,7 +30,7 @@ public class MyURLSpan extends URLSpan {
     }
 
     @Override
-    public void updateDrawState(@NonNull TextPaint ds) {
+    public void updateDrawState(TextPaint ds) {
         super.updateDrawState(ds);
         if (color != defaultValue) {
             ds.setColor(color);

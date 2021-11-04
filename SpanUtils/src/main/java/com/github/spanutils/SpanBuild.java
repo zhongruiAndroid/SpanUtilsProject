@@ -3,14 +3,10 @@ package com.github.spanutils;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Parcel;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
@@ -28,7 +24,6 @@ import android.text.style.StyleSpan;
 import android.text.style.SubscriptSpan;
 import android.text.style.SuperscriptSpan;
 import android.text.style.TypefaceSpan;
-import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -47,15 +42,15 @@ public class SpanBuild {
     private boolean textSizeUseDp = false;
     /*文字相对大小*/
     private float relativeTextSizeScale;
-    @ColorInt
+
     private int textColor;
-    @ColorInt
+
     private int bgColor;
     private float blurRadius = 5;
     private BlurMaskFilter.Blur blur;
 
     /*竖条纹*/
-    @ColorInt
+
     private int quoteColor;
     private int quoteStripeWidth;
     private int quoteGapWidth;
@@ -256,7 +251,7 @@ public class SpanBuild {
         if (isClickable) {
             builder.setSpan(new MyClickSpan(textColor, underLine) {
                 @Override
-                public void onClick(@NonNull View widget) {
+                public void onClick(View widget) {
                     super.onClick(widget);
                     if (clickListener != null) {
                         clickListener.onClick(widget);
@@ -346,6 +341,7 @@ public class SpanBuild {
         buildSpan();
         return builder;
     }
+
     /************************************************************************************/
 
     public SpanBuild setTextSize(int textSize) {
