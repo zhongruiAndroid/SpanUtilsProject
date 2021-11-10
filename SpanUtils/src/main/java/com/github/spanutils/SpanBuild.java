@@ -106,7 +106,7 @@ public class SpanBuild {
     private List<Object> spanList = new ArrayList<>();
 
 
-    private boolean needSetMovementMethod;
+//    private boolean needSetMovementMethod;
 
     public SpanBuild() {
         this("");
@@ -239,7 +239,7 @@ public class SpanBuild {
             textFamily = "";
         }
         if (!TextUtils.isEmpty(url)) {
-            needSetMovementMethod = true;
+//            needSetMovementMethod = true;
             builder.setSpan(new MyURLSpan(url, textColor, underLine), start, end, flag);
             url = "";
         }
@@ -335,7 +335,7 @@ public class SpanBuild {
     }
 
     public SpannableStringBuilder build(TextView textView) {
-        if (textView != null && needSetMovementMethod) {
+        if (textView != null /*&& needSetMovementMethod*/) {
             textView.setMovementMethod(LinkMovementMethod.getInstance());
         }
         buildSpan();
