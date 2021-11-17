@@ -2,19 +2,12 @@ package com.github.spanutils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.text.Layout;
-import android.text.Spanned;
 import android.text.style.ImageSpan;
-import android.view.View;
 
 public   class MyImageSpan extends ImageSpan {
         private int defaultValue = -666666;
