@@ -86,8 +86,8 @@ public class SpanBuild {
     private int otherLineMargin;
 
 
-    private boolean isClickable;
-    private View.OnClickListener clickListener;
+    /*设置span*/
+    private List<View.OnClickListener> clickSpanList = new ArrayList<>();
 
     private SpannableStringBuilder builder;
 
@@ -140,8 +140,7 @@ public class SpanBuild {
         flag = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
         currentLineMargin = defaultValue;
         otherLineMargin = defaultValue;
-        isClickable = false;
-        clickListener = null;
+        clickSpanList = new ArrayList<>();
         imageSpan = null;
 
         pointRadius = 4;
@@ -248,17 +247,22 @@ public class SpanBuild {
             currentLineMargin = 0;
             otherLineMargin = 0;
         }
-        if (isClickable) {
-            builder.setSpan(new MyClickSpan(textColor, underLine) {
-                @Override
-                public void onClick(View widget) {
-                    super.onClick(widget);
-                    if (clickListener != null) {
-                        clickListener.onClick(widget);
-                    }
+        if(clickSpanList!=null){
+            for (final View.OnClickListener listener:clickSpanList){
+                if (listener == null) {
+                    continue;
                 }
-            }, start, end, flag);
-            isClickable = false;
+                builder.setSpan(new MyClickSpan(textColor, underLine) {
+                    @Override
+                    public void onClick(View widget) {
+                        super.onClick(widget);
+                        if (listener != null) {
+                            listener.onClick(widget);
+                        }
+                    }
+                }, start, end, flag);
+            }
+            clickSpanList.clear();
         }
         if (spanList != null) {
             for (Object obj : spanList) {
@@ -502,8 +506,10 @@ public class SpanBuild {
         if (clickListener == null) {
             return this;
         }
-        this.clickListener = clickListener;
-        this.isClickable = true;
+        if (clickSpanList == null) {
+            clickSpanList=new ArrayList<>();
+        }
+        clickSpanList.add(clickListener);
         return this;
     }
 

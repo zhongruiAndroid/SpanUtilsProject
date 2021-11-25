@@ -10,6 +10,10 @@ public class MyClickSpan extends ClickableSpan {
     private int color;
     private boolean useUnderLine;
 
+    public MyClickSpan(int color) {
+        this(color, false);
+    }
+
     public MyClickSpan(int color, boolean useUnderLine) {
         this.color = color;
         this.useUnderLine = useUnderLine;
