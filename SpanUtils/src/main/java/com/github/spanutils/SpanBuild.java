@@ -341,6 +341,7 @@ public class SpanBuild {
     public SpannableStringBuilder build(TextView textView) {
         if (textView != null /*&& needSetMovementMethod*/) {
             textView.setMovementMethod(LinkMovementMethod.getInstance());
+            textView.setHighlightColor(Color.TRANSPARENT); // 该代码必须设置，否则响应点击事件后会有个背景色不消失
         }
         buildSpan();
         return builder;
