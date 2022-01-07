@@ -5,7 +5,7 @@
   
   
 ## [Demo.apk下载](https://raw.githubusercontent.com/zhongruiAndroid/SpanUtilsProject/master/apk/demo.apk "apk文件")
-## [jar下载](https://raw.githubusercontent.com/zhongruiAndroid/SpanUtilsProject/master/apk/spanutils.apk "jar文件")
+## [jar下载](https://raw.githubusercontent.com/zhongruiAndroid/SpanUtilsProject/master/apk/spanutils.jar "jar文件")
 无法下载Demo.apk时,可以去apk目录手动下载
     
 
